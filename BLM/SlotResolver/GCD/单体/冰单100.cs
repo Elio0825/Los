@@ -51,6 +51,10 @@ public class 冰单100 : ISlotResolver
             if (BLMHelper.冰针 < 3)
                 return Skill.冰澈;
 
+            // 本轮还没打过冰四，先补上
+            if (!bd.UsedIce4ThisCycle)
+                return Skill.冰澈;
+
             // 有 UI 悖论指示，先打悖论
             if (BLMHelper.悖论指示)
             {
@@ -70,6 +74,9 @@ public class 冰单100 : ISlotResolver
                 return Skill.冰三;
 
             if (BLMHelper.冰针 < 3)
+                return Skill.冰澈;
+
+            if (!bd.UsedIce4ThisCycle)
                 return Skill.冰澈;
 
             if (!bd.UsedUiParadoxThisCycle && BLMHelper.悖论指示)

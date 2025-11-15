@@ -230,6 +230,13 @@ public class BLMEvetHandle : IRotationEventHandler
     if (id == Skill.火四)
         bd.F4CountThisAF++;
 
+    // 1.5 冰阶段关键技能记录
+    if (id == Skill.冰三)
+        bd.UsedIce4ThisCycle = false;
+
+    if (id == Skill.冰澈)
+        bd.UsedIce4ThisCycle = true;
+
     // 2. 悖论使用记录（根据当前是在冰态还是火态）
     if (id == Skill.悖论)
     {
