@@ -1,6 +1,7 @@
 using AEAssist.CombatRoutine;
 using AEAssist.CombatRoutine.Module;
 using AEAssist.Helper;
+using los.BLM.Helper;
 using los.BLM.QtUI;
 using los.BLM.SlotResolver.Data;
 
@@ -19,6 +20,7 @@ public class 醒梦 : ISlotResolver
         if (_skillId.GetSpell().Cooldown.TotalMilliseconds > 0) return -1;
         //if (BLMHelper.冰状态 && Core.Me.CurrentMp < 800 && Skill.墨泉.GetSpell().Cooldown.TotalSeconds < 8 && BLMHelper.冰层数 < 3) return 1;
         if (BlackMageQT.GetQt("TTK")) return 1;
+        if (Core.Me.InCombat() && !BLMHelper.在标准织法窗()) return -50;
         return -99;
     }
 

@@ -47,54 +47,35 @@ public class 火单100 : ISlotResolver
         // 用你封装好的蓝量，并转成 int 方便后面计算
         int mp = (int)Helper.蓝量;
 
-        // === ToFire 阶段：火三起手 ===
         if (bd.LoopPhase == BlmLoopPhase.ToFire)
         {
-            // 确保火层数拉满
-            if (BLMHelper.火层数 < 3)
-                return Skill.火三;
-
-            // AF3 已经就绪，进入 FireCore
-            bd.LoopPhase = BlmLoopPhase.FireCore;
-        }
-
-        // === FireCore 阶段：F4 + AF 悖论 ===
-        if (bd.LoopPhase == BlmLoopPhase.FireCore)
-        {
-            // 1) AF 悖论优先：有指示 & 这一轮还没打过 & 蓝量还能支持后续 F4
-            if (!bd.UsedAfParadoxThisCycle
-                && BLMHelper.悖论指示
-                && mp >= 4000)
+            if (!bd.UsedAfParadoxThisCycle && BLMHelper.悖论指示)
             {
                 bd.UsedAfParadoxThisCycle = true;
                 return Skill.悖论;
             }
 
-            // 2) F4 计数：理论上还能打几发 F4
-            int theoreticalF4Left = mp / 2400;
+            if (BLMHelper.火层数 < 3)
+                return Skill.火三;
 
-            if (bd.F4CountThisAF < 6 && theoreticalF4Left > 0)
-            {
-                return Skill.火四;
-            }
-
-            // 3) 如果 Astral Soul 已经满层，准备进 Finisher
-            if (BLMHelper.耀星层数 >= 6)
-            {
-                bd.LoopPhase = BlmLoopPhase.Finisher;
-                // 交给 Finisher 阶段决策
-                return DecideFinisher(mp, bd);
-            }
-
-            // 4) 否则蓝量不够，再考虑提前收尾
-            if (mp < 2400)
-                return DecideFinisher(mp, bd);
-
-            // 保底：再打一发火四
-            return Skill.火四;
+            bd.LoopPhase = BlmLoopPhase.FireCore;
         }
 
-        // === Finisher 阶段：耀星 + 绝望 ===
+        if (bd.LoopPhase == BlmLoopPhase.FireCore)
+        {
+            if (!bd.UsedAfParadoxThisCycle && BLMHelper.悖论指示)
+            {
+                bd.UsedAfParadoxThisCycle = true;
+                return Skill.悖论;
+            }
+
+            if (bd.F4CountThisAF < 6 && mp >= 800)
+                return Skill.火四;
+
+            if (BLMHelper.耀星层数 >= 6 || mp < 800)
+                bd.LoopPhase = BlmLoopPhase.Finisher;
+        }
+
         if (bd.LoopPhase == BlmLoopPhase.Finisher)
         {
             return DecideFinisher(mp, bd);
