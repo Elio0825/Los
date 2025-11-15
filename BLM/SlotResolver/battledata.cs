@@ -72,6 +72,7 @@ public class BattleData
     public bool UsedAfParadoxThisCycle { get; set; } = false;
     public bool UsedFlareThisCycle { get; set; } = false;
     public bool UsedDespairThisCycle { get; set; } = false;
+    public bool UsedIce4ThisCycle { get; set; } = false;
 
     public void ResetLoop()
     {
@@ -81,6 +82,7 @@ public class BattleData
         UsedAfParadoxThisCycle = false;
         UsedFlareThisCycle = false;
         UsedDespairThisCycle = false;
+        UsedIce4ThisCycle = false;
     }
 }
 
