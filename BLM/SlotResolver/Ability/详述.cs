@@ -26,6 +26,7 @@ public class 详述 : ISlotResolver
     {
         if (Core.Me.Level < 86) return -6;
         if (!_skillId.GetSpell().IsReadyWithCanCast()) return -1;
+        if (Core.Me.InCombat() && !BLMHelper.在标准织法窗()) return -50;
         if (Core.Me.Level >= 98)
         {
             if (BLMHelper.通晓层数 == 3) return -2;

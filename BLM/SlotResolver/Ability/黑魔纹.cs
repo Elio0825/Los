@@ -29,6 +29,7 @@ public class 黑魔纹 : ISlotResolver
         if (_skillId.GetSpell().Charges < 1) return -1;
         if (Helper.有buff(737)) return -3;
         if (GCDHelper.GetGCDCooldown() < 500) return -4;
+        if (Core.Me.InCombat() && !BLMHelper.在标准织法窗()) return -50;
         return 1;
     }
 }

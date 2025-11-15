@@ -31,6 +31,7 @@ public class 墨泉 : ISlotResolver
         if (!BLMHelper.火状态) return -2;
         if (Core.Me.CurrentMp > 800) return -3;
         if (BlackMageQT.GetQt("TTK")) return 999;
+        if (Core.Me.InCombat() && !BLMHelper.在标准织法窗()) return -50;
         //if (!BattleData.Instance.已使用瞬发 && !QT.Instance.GetQt("能力技卡G放")) return -4;
         if (BLMHelper.耀星层数 == 6 )return -6;
         if (GCDHelper.GetGCDCooldown() < 500) return -7;

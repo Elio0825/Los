@@ -28,6 +28,7 @@ public class 星灵移位 : ISlotResolver
     public int Check()
     {
         if (_skillId.GetSpell().Cooldown.TotalMilliseconds > 0) return -1;
+        if (Core.Me.InCombat() && !BLMHelper.在标准织法窗()) return -50;
         if (!BLMHelper.冰状态 && !BLMHelper.火状态) return -2;
         if (BlackMageQT.GetQt("TTK"))
         {

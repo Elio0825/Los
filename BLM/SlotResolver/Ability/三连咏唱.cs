@@ -30,6 +30,7 @@ public class 三连咏唱 : ISlotResolver
         if (_skillId.GetSpell().Charges < 1) return -1;
         if (Helper.可瞬发()) return -4;
         if (BlackMageQT.GetQt("TTK")) return 999;
+        if (Core.Me.InCombat() && !BLMHelper.在标准织法窗()) return -50;
         if (BLMHelper.火状态)
         {
             if (BLMHelper.三目标aoe() || BLMHelper.双目标aoe())

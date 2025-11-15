@@ -4,6 +4,7 @@ using AEAssist.Extension;
 using AEAssist.Helper;
 using AEAssist.JobApi;
 using los.BLM.QtUI;
+using los.BLM.SlotResolver;
 using los.BLM.SlotResolver.Data;
 
 namespace los.BLM.Helper;
@@ -75,6 +76,30 @@ public static class BLMHelper
         if (Core.Me.IsCasting) return false;
         if (GCDHelper.GetGCDDuration() > 0) return false;
         return true;
+    }
+
+    public static bool 在标准织法窗()
+    {
+        if (!Core.Me.InCombat()) return true;
+
+        var lastGcd = BattleData.Instance.前一gcd;
+        if (lastGcd == 0) return false;
+
+        if (lastGcd is Skill.悖论 or Skill.异言 or Skill.绝望 or Skill.冰三 or Skill.火三)
+            return true;
+
+        if (lastGcd == Skill.雷一 || lastGcd == Skill.雷二)
+            return true;
+
+        var thunderSingle = Skill.雷一.GetActionChange();
+        if (thunderSingle != 0 && lastGcd == thunderSingle)
+            return true;
+
+        var thunderMulti = Skill.雷二.GetActionChange();
+        if (thunderMulti != 0 && lastGcd == thunderMulti)
+            return true;
+
+        return false;
     }
 
     public static bool 三目标aoe()

@@ -25,6 +25,7 @@ public class 即刻 : ISlotResolver
     {
         if (_skillId.GetSpell().Cooldown.TotalMilliseconds > 0) return -1;
         if (BlackMageQT.GetQt("TTK")) return 999;
+        if (Core.Me.InCombat() && !BLMHelper.在标准织法窗()) return -50;
         if (Helper.可瞬发()) return -3;
         if (BLMHelper.火状态)
         {
